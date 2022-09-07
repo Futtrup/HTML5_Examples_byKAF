@@ -1,0 +1,14 @@
+{
+  "name": "express_01",
+  "version": "1.0.0",
+  "description": "Simple Express app, start by running this cmd 'node app.js'",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "KAF",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
