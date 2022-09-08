@@ -15,7 +15,56 @@
 </head>
 <body>
     <video id="videoPlayer" width="650" controls muted="muted" autoplay>
-        <source src="/video" type="video/mp4" />
+        <source id="videoSource" src="/video" type="video/mp4" />
     </video>
+    <button onclick="btn1_Click()">Get existing video</button>
+    <button onclick="btn2_Click()">Get non existning video</button>
+
+    <script>
+
+        var videoPath = "/video";
+        // var videoError = false;
+        var video = document.getElementById("videoPlayer");
+        video.addEventListener('error', (err, listener) => {
+            alert('Video file not found');
+            // videoError = true;
+        }, true);
+
+        function btn1_Click() {
+            console.log('Try to get a known to exist video from the backend/API');       
+            setVideoSource('/video');          
+        }
+
+        function btn2_Click() {
+            console.log('Try to get a known to NOT exist video from the backend/API');
+            setVideoSource('/nonExistingVideo');
+        }
+
+        function setVideoSource(newSource) {
+
+            console.log("Current videoPath: '" + videoPath + "'");
+            videoPath = newSource;
+            console.log("New video path: '" + videoPath + "'");
+
+            var v = document.getElementById("videoPlayer");
+            var s = document.getElementById("videoSource");
+            
+            console.log("Current state of video and source elements");
+            console.log(v);
+            console.log(s);
+
+            // if (!videoError){
+                v.pause();
+                s.setAttribute('src', newSource);
+                v.load();
+                v.play();
+            // }
+            // videoError = false;            
+
+            console.log("New state of video and source elements")
+            console.log(v);
+            console.log(s);
+        }
+    </script>
 </body>
 </html>
