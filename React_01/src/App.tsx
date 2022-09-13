@@ -1,32 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import GlobalInfo from "./components/GlobalInfo";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FunctionComponent = () => {
+  
+  type Country = {
+    Country: string,
+    CountryCode: string,
+    Date: string,
+    ID: string,
+    NewConfirmed: number,
+    NewDeaths: number,
+    NewRecovered: number,
+    Premium: unknown,
+    Slug: string,
+    TotalConfirmed: number,
+    TotalDeaths: number,
+    TotalRecovered: number
+  }
+
+  type GlobalData = {
+    Date : string,
+    NewConfirmed : number,
+    NewDeaths: number,
+    NewRecovered: number,
+    TotalConfirmed: number,
+    TotalDeaths: number
+    TotalRecovered: number
+  }
+
+  type ResponseData = {
+    Countries: Country[];
+    Date: string;
+    Global: GlobalData,
+    ID: string,
+    Message: string;
+  }
+
+  const [data, setData] = useState<ResponseData | undefined>(undefined);
+
+  const fetchData = async () => {
+    const result = await fetch('https://api.covid19api.com/summary');
+    const data: ResponseData = await result.json();
+
+    setData(data);
+    console.log(data);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [])
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div>
+      {/* <h1>Global Covid-19 data</h1> */}
+      {/* <GlobalInfo 
+        newConfirmed={data?.Global.NewConfirmed} 
+        newDeaths={data?.Global.NewDeaths} 
+        newRecovered={data?.Global.NewRecovered}  
+      /> */}
+      { data ? <GlobalInfo 
+          newConfirmed={data?.Global.NewConfirmed} 
+          newDeaths={data?.Global.NewDeaths} 
+          newRecovered={data?.Global.NewRecovered}  
+        /> : "Loading..." }
+
     </div>
   )
 }
