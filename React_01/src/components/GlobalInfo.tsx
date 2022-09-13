@@ -8,9 +8,9 @@ const GlobalInfo: React.FunctionComponent<Props> = ({newConfirmed, newDeaths, ne
     
     return <div>
         <h1>Global Covid-19 data</h1>
-        <h3>New Confirmed: {newConfirmed}</h3>
-        <h3>New Deaths: {newDeaths}</h3>
-        <h3>New Recovered: {newRecovered}</h3>
+        <h3>New Confirmed: {Intl.NumberFormat().format(newConfirmed)}</h3>
+        <h3>New Deaths: {Intl.NumberFormat().format(newDeaths)}</h3>
+        <h3>New Recovered: {Intl.NumberFormat().format(newRecovered)}</h3>
     </div>
 }
 
