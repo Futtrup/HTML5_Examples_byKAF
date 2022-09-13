@@ -1,17 +1,30 @@
+import styled from '@emotion/styled';
 import type { Country } from '../types';
+import CountryItem from './CountryItem';
 
 interface Props {
     countries: Country[];
+    onItemClick: (country: Country) => void;
 }
 
-const CountryList: React.FunctionComponent<Props> = ({ countries}) => {
+const ListWrapper = styled.ul`
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+`
+
+
+const CountryList: React.FunctionComponent<Props> = ({ countries, onItemClick}) => {
 
     return (
-        <ul>
+        <ListWrapper>
             {countries.map(c => 
-            <li key={c.ID}>{c.Country}</li>
+                <CountryItem 
+                    country={c}
+                    onItemClick={onItemClick}
+                />
             )}
-        </ul>
+        </ListWrapper>
     )
 }
 
