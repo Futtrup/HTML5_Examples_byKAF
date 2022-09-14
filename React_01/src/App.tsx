@@ -1,5 +1,6 @@
 import { Global, css } from "@emotion/react";
 import { useEffect, useState } from "react";
+import BarChart from "./components/BarChart";
 import CountryList from "./components/CountryList";
 import GlobalInfo from "./components/GlobalInfo";
 import { Country, ResponseData } from "./types";
@@ -42,7 +43,10 @@ const App: React.FunctionComponent = () => {
         }
       `}/>
 
-      {/* {activeCountries.map(aCountry => <span>{aCountry.Country}</span>)} */}
+        {/* {activeCountries.map(aCountry => <span>{aCountry.Country}</span>)} */}
+        <hr />
+
+        <BarChart />
 
       { data ? 
         <>

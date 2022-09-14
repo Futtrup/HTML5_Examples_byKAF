@@ -19,7 +19,7 @@ const CountryList: React.FunctionComponent<Props> = ({ countries, onItemClick}) 
     return (
         <ListWrapper>
             {countries.map(c => 
-                <CountryItem 
+                <CountryItem key={c.ID}
                     country={c}
                     onItemClick={onItemClick}
                 />
