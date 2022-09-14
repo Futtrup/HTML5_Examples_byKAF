@@ -1,36 +1,78 @@
-import { BarOptions, ChartData, Chart, CategoryScale, LinearScale, BarElement } from "chart.js";
-import { Bar } from "react-chartjs-2";
-
-
-Chart.register(
+import styled from "@emotion/styled";
+import {
+    Chart as ChartJS,
     CategoryScale,
     LinearScale,
-    BarElement
+    BarElement,
+    ChartData,
+    Title,
+    Tooltip,
+    Legend,
+    ChartOptions,
+  } from 'chart.js';
+import { Bar } from "react-chartjs-2";
+import { Country } from "../types";
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
 )
 
-const BarChart: React.FunctionComponent = () => {
-
-const data: ChartData<'bar'> =  {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [
-        {
-            label: 'MyData', 
-            data: [10, 20, 30, 40, 50, 60]
-        }
-    ]
+interface Props {
+    limit: number,
+    countries: Country[];
 }
 
-const options: BarOptions = {
-    base: 0,
-    borderSkipped: false,
-    borderRadius: 0,
-    inflateAmount: 0,
-    borderWidth: 0,
-    backgroundColor: "",
-    borderColor: ""
+const options: ChartOptions<'bar'> = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: 'Chart.js Bar Chart',
+      },
+    },
+};
+
+const generateChartDate = (countries: Country[], limit: number): ChartData<'bar', number[] > => {
+    const data: number[] = [];
+    const labels: string[] = [];
+    const colors: string[] = [];
+
+    countries.forEach(c => {
+        data.push(c.NewConfirmed);
+        labels.push(c.Country);
+        colors.push(c.NewConfirmed > limit ? "red" : "green")
+    })
+
+    return {
+        labels: labels,
+        datasets: [
+            {
+                label: 'New Confirmed', 
+                data: data,
+                backgroundColor: colors,
+            }
+        ]
+    }
 }
 
-return <Bar data={data} options={ options } />
+const ChartWrapper = styled.div`
+    max-width: 700px;
+    margin: 0 auto;
+`
+
+const BarChart: React.FunctionComponent<Props> = ({ countries, limit }) => {
+    return <ChartWrapper>
+        <Bar data={ generateChartDate(countries, limit) } options={ options } />
+    </ChartWrapper>     
 }
 
 export default BarChart;

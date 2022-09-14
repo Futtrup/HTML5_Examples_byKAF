@@ -43,21 +43,24 @@ const App: React.FunctionComponent = () => {
         }
       `}/>
 
-        {/* {activeCountries.map(aCountry => <span>{aCountry.Country}</span>)} */}
-        <hr />
-
-        <BarChart />
-
       { data ? 
         <>
           <GlobalInfo 
-            newConfirmed={data.Global.NewConfirmed} 
-            newDeaths={data.Global.NewDeaths} 
-            newRecovered={data.Global.NewRecovered}  
+            newConfirmed={ data.Global.NewConfirmed } 
+            newDeaths={ data.Global.NewDeaths } 
+            newRecovered={ data.Global.NewRecovered }  
           />
+
+          <hr />
+
+          {activeCountries.length > 0 ? 
+            <BarChart countries={ activeCountries } limit= { 100 } />
+              : null
+            }          
+
           <CountryList
-            countries={data?.Countries}
-            onItemClick={onCountryClick}
+            countries={ data.Countries }
+            onItemClick={ onCountryClick }
           />
         </>    
          : (
